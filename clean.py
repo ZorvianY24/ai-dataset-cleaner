@@ -37,8 +37,9 @@ def clean_csv(path):
     seen = set()
     cleaned = []
     for row in body:
+        row = [cell.strip() for cell in row]
         key = tuple(row)
-        if key in seen or not any(cell.strip() for cell in row):
+        if key in seen or not any(row):
             continue
         seen.add(key)
         cleaned.append(row)
