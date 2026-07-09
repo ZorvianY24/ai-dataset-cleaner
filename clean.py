@@ -3,12 +3,22 @@ import sys
 import json
 import csv
 
+def strip_strings(value):
+    if isinstance(value, str):
+        return value.strip()
+    if isinstance(value, dict):
+        return {k: strip_strings(v) for k, v in value.items()}
+    if isinstance(value, list):
+        return [strip_strings(v) for v in value]
+    return value
+
 def clean_json(path):
     with open(path, encoding="utf-8") as f:
         data = json.load(f)
     seen = set()
     cleaned = []
     for row in data:
+        row = strip_strings(row)
         key = json.dumps(row, sort_keys=True)
         if key in seen or not row:
             continue
