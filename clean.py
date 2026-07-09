@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import os
 import sys
 import json
 import csv
@@ -54,6 +55,8 @@ if __name__ == "__main__":
     if len(sys.argv) != 2:
         sys.exit("Usage: python clean.py <fichier.json|.csv>")
     path = sys.argv[1]
+    if not os.path.isfile(path):
+        sys.exit(f"Fichier introuvable: {path}")
     if path.endswith(".json"):
         clean_json(path)
     elif path.endswith(".csv"):
